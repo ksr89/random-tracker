@@ -14,7 +14,7 @@ export const thunks = {
     return (dispatch, getState) => {
       const { username, graphData } = getState();
 
-      fetch('http://localhost:4096/tracker?username=' + username)
+      fetch('http://121.241.115.123:4096/tracker?username=' + username)
         .then((response) => {
           return response.json();
         })

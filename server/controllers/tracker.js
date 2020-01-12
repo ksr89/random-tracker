@@ -1,26 +1,29 @@
+var users = {};
+
 exports.track = function (req, res) {
-  var userName = req.params.userName;
+  var userName = req.query.username;
+  userName = userName.replace(/[^A-Z0-9]+/ig, "_");
+  console.log('userName', userName)
   var timeStamp = Math.floor(Date.now() / 1000);
 
-  if (req.session.userName) {
-
-    if (timeStamp - req.session.lastUpdatedAt > 30) {
-      req.session.value = Math.floor(Math.random() * 10) + 1;
-      req.session.lastUpdatedAt = timeStamp;
+  if (userName in users) {
+    if (timeStamp - users[userName].lastUpdatedAt > 30) {
+      users[userName].lastUpdatedAt = timeStamp;
+      users[userName].value = Math.floor(Math.random() * 10) + 1;
     }
 
     res.status(200).json({
-      "lastUpdatedAt": req.session.lastUpdatedAt,
-      "value": req.session.value
+      "lastUpdatedAt": users[userName].lastUpdatedAt,
+      "value": users[userName].value
     })
 
   } else {
-    req.session.userName = userName;
-    req.session.lastUpdatedAt = timeStamp;
-    req.session.value = Math.floor(Math.random() * 10) + 1;
+    users[userName] = {};
+    users[userName].lastUpdatedAt = timeStamp;
+    users[userName].value = Math.floor(Math.random() * 10) + 1;
     res.status(200).json({
-      "lastUpdatedAt": req.session.lastUpdatedAt,
-      "value": req.session.value
+      "lastUpdatedAt": users[userName].lastUpdatedAt,
+      "value": users[userName].value
     })
   }
 }

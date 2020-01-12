@@ -1,7 +1,6 @@
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var express = require("express");
-var session = require('express-session');
 
 module.exports = function (app, config) {
   var allowCrossDomain = function (req, res, next) {
@@ -30,12 +29,6 @@ module.exports = function (app, config) {
   }));
 
   app.use(express.static(config.CLIENT_PATH));
-
-  app.use(session({
-    secret: config.secret,
-    resave: false,
-    saveUninitialized: false
-  }));
 
   app.use(allowCrossDomain);
 }

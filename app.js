@@ -6,7 +6,7 @@ var app = express();
 require('./server/config/express')(app, config);
 
 // Bootstrap routes
-require('./server/config/routes')(app);
+require('./server/config/routes')(app, config);
 
 // Start the app by listening on <port>
 var port = config.port || 3000;

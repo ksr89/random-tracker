@@ -1,3 +1,5 @@
-var path = require("path");
-
-module.exports = function (app) {}
+module.exports = function (app, config) {
+  // Tracker routes
+  var tracker = require('../controllers/tracker');
+  app.get('/tracker/:userName', tracker.track);
+}

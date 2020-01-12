@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 import GraphComponent from '../components/Graph';
 import { thunks } from '../actions';
+import { convertData } from '../helpers/graph';
 
 const mapStateToProps = (state) => {
+  const graphData = convertData(state.graphData);
+
   return {
-    graphData: state.graphData,
+    graphData,
   };
 };
 

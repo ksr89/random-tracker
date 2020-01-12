@@ -4,7 +4,7 @@ import {
   GRAPH_DATA,
 } from './actions';
 
-function username(state = 'testing', action) {
+function username(state = '', action) {
   switch (action.type) {
     case USER_NAME:
       return action.data;

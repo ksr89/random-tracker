@@ -12,7 +12,26 @@ export const refreshGraphData = (data) => {
 export const thunks = {
   refreshGraphData: () => {
     return (dispatch, getState) => {
-      dispatch(refreshGraphData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+      const { username, graphData } = getState();
+
+      fetch('http://localhost:4096/tracker?username=' + username)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (graphData.length) {
+            const lastData = graphData[graphData.length - 1];
+            if (lastData.lastUpdatedAt !== data.lastUpdatedAt) {
+              if (graphData.length >= 10) {
+                graphData.shift();
+              }
+              graphData.push(data);
+              dispatch(refreshGraphData([...graphData]));
+            }
+          } else {
+            dispatch(refreshGraphData([data]));
+          }
+        });
     };
   },
 };

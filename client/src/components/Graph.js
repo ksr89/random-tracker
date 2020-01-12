@@ -15,7 +15,7 @@ class GraphComponent extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if(this.graphData.length !== nextProps.graphData.length) {
+    if (JSON.stringify(this.graphData) !== JSON.stringify(nextProps.graphData)) {
       this.chart.data.datasets[0].data = nextProps.graphData;
       this.chart.update();
       this.graphData = nextProps.graphData;
@@ -31,7 +31,7 @@ class GraphComponent extends React.Component {
         "labels": new Array(10),
         "datasets": [
           {
-            "data": new Array(),
+            "data": [],
             "fill": false,
             "borderColor": "rgb(75, 192, 192)",
             "lineTension": 0
